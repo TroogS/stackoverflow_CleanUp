@@ -134,7 +134,8 @@ body.nightmode .post-layout .post-text code .kwd {
   color: #468fb7;
 }
 
-body.nightmode .post-layout .post-text code .typ {
+body.nightmode .post-layout .post-text code .typ,
+body.nightmode .post-layout .post-text code .lit {
   color: #4EC9B0;
 }
 
