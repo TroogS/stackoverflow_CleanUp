@@ -57,6 +57,14 @@ footer,
 #mainbar {
   width: 100%;
 }
+
+@media screen and (min-width: 1400px) {
+  body {
+    width: 1370px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 ` );
 
 GM_addStyle (`
