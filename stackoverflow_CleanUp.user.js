@@ -169,7 +169,6 @@ function RestoreValues() {
 
         let classList = Object.values(storeValue);
 
-        element.className = "";
         for(let c = 0; c < classList.length; c++) {
             if(!classList[c]) continue;
             element.classList.add(classList[c]);
