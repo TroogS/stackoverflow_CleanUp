@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         stackoverflow CleanUp
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @updateURL    https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @downloadURL  https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @description  Use stackoverflow full width, optional night mode
@@ -143,6 +143,11 @@ body.nightmode .post-layout .post-text code .pun {
   color: #dcdcdc;
 }
 
+body.nightmode .post-layout .post-text code .tag {
+  color: #ffa78b;
+}
+
+
 body.nightmode .post-layout .post-text code .str {
   color: #d99c87;
 }
@@ -150,6 +155,16 @@ body.nightmode .post-layout .post-text code .str {
 body.nightmode .post-layout .post-text code .com {
   color: #3d8831;
 }
+
+body.nightmode .post-layout .post-text code .atn {
+  color: #7DC8F2;
+}
+
+body.nightmode .post-layout .post-text code .atv {
+  color: #4A9AD4;
+}
+
+
 `);
 
 (function() {
