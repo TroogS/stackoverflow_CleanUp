@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         stackoverflow CleanUp
 // @namespace    http://tampermonkey.net/
-// @version      0.3
-// @updateURL    http://beging.de/dev/stackoverflow_CleanUp.user.js
-// @downloadURL  http://beging.de/dev/stackoverflow_CleanUp.user.js
-// @description  Use stackoverflow full width
+// @version      0.4
+// @updateURL    https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
+// @downloadURL  https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
+// @description  Use stackoverflow full width, optional night mode
 // @author       A. Beging
 // @match        https://stackoverflow.com*
 // @match        https://stackoverflow.com/*
