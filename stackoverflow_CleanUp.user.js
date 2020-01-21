@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         stackoverflow CleanUp
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @updateURL    https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @downloadURL  https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @description  Use stackoverflow full width, optional night mode
@@ -88,14 +88,14 @@ button.toggle::after {
   border: 1px solid transparent;
   border-radius: 3px;
   color: #FFF;
-  background-color: #0095ff;
+  background-color: var(--blue-500);
   box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);
   padding: 6px 10px;
   content: attr(data-text) " OFF";
 }
 
 button.toggle:hover:after {
-  background-color: #0077cc;
+  background-color: var(--blue);
   border-color: #0078D7;
 }
 
@@ -112,6 +112,21 @@ body.hide-comments [id^='comments-']
   display: none;
 }
 `);
+
+// Hide Vote Controls
+GM_addStyle(`
+body.hide-vote #answers .answer.accepted-answer
+{
+  border-left: 4px solid var(--green-500);
+  padding-left: 20px;
+}
+
+body.hide-vote .post-layout .votecell {
+  display: none;
+}
+`);
+
+
 
 // Night Mode
 GM_addStyle (`
@@ -228,10 +243,16 @@ function CreateControlDiv() {
     hideComButton.setAttribute("data-text", "Comments");
     hideComButton.setAttribute("data-storeid", "togglebtnhidecomments");
 
+    var voteControlsButton = document.createElement("button");
+    voteControlsButton.classList.add("toggle");
+    voteControlsButton.setAttribute("data-text", "Vote Controls");
+    voteControlsButton.setAttribute("data-storeid", "togglebtnvotecontrols");
+
     var controlDiv = document.createElement("div");
     controlDiv.classList.add("control-div")
     controlDiv.append(nmButton);
     controlDiv.append(hideComButton);
+    controlDiv.append(voteControlsButton);
 
     var body = document.getElementsByTagName("body")[0];
     body.prepend(controlDiv);
@@ -255,6 +276,15 @@ function SetMode(functionCode, mode) {
             document.body.classList.remove("hide-comments");
         } else {
             document.body.classList.add("hide-comments");
+        }
+    }
+
+    // Toggle Vote Controls
+    if(functionCode === "togglebtnvotecontrols") {
+        if(mode === true) {
+            document.body.classList.remove("hide-vote");
+        } else {
+            document.body.classList.add("hide-vote");
         }
     }
 }
