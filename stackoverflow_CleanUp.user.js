@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         stackoverflow CleanUp
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @updateURL    https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @downloadURL  https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @description  Use stackoverflow full width, optional night mode
@@ -143,7 +143,6 @@ body.nightmode .post-layout .post-text pre {
 
 body.nightmode code {
   color: #c7254e;
-  padding: 2px 5px;
   background-color: #dcdcdc;
 }
 
