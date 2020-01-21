@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         stackoverflow CleanUp
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @updateURL    https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @downloadURL  https://github.com/TroogS/stackoverflow_CleanUp/raw/master/stackoverflow_CleanUp.user.js
 // @description  Use stackoverflow full width, optional night mode
@@ -21,21 +21,15 @@ function GM_addStyle (cssStr) {
 // Stackoverflow page manipulation
 GM_addStyle ( `
 
-body {
-  padding-top: 0;
-}
-
 #left-sidebar,
 #sidebar,
 header,
 footer,
-#post-form,
 .bottom-notice,
 .post-taglist,
 .mb0,
 .js-favorite-btn,
-.js-post-issue,
-[id^='comments-link-']
+.js-post-issue
 {
   display: none;
 }
@@ -61,8 +55,13 @@ footer,
 
 GM_addStyle (`
 .control-div {
-  margin-left: 24px;
-  margin-top: 10px;
+  width: 100%;
+  padding: 10px 24px;
+  position: fixed;
+  z-index: 10;
+  background-color: #FFF;
+  border-bottom: 1px solid #727273;
+  top: 0;
 }
 `);
 
@@ -72,8 +71,8 @@ button.toggle {
   padding: 0;
   border: 1px solid transparent;
   visibility: hidden;
-  padding-top: .8em;
-  padding-bottom: .8em;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 button.toggle::after {
@@ -83,7 +82,7 @@ button.toggle::after {
   color: #FFF;
   background-color: #0095ff;
   box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);
-  padding: .8em;
+  padding: 6px 10px;
   content: attr(data-text) " OFF";
 }
 
@@ -97,10 +96,24 @@ button.toggle.active::after {
 }
 `);
 
+// Hide Comments
+GM_addStyle(`
+body.hide-comments #post-form,
+body.hide-comments [id^='comments-']
+{
+  display: none;
+}
+`);
+
+// Night Mode
 GM_addStyle (`
 body.nightmode {
   background-color: #2e2e30;
   color: #F1F1F1;
+}
+
+body.nightmode .control-div {
+  background-color: #2e2e30;
 }
 
 body.nightmode #content {
@@ -165,6 +178,9 @@ body.nightmode .post-layout .post-text code .atv {
   color: #4A9AD4;
 }
 
+body.nightmode .wmd-button span {
+  background-position-y: -20px !important;
+}
 
 `);
 
@@ -200,9 +216,15 @@ function CreateControlDiv() {
     nmButton.setAttribute("data-text", "Nightmode");
     nmButton.setAttribute("data-storeid", "togglebtnnightmode");
 
+    var hideComButton = document.createElement("button");
+    hideComButton.classList.add("toggle");
+    hideComButton.setAttribute("data-text", "Comments");
+    hideComButton.setAttribute("data-storeid", "togglebtnhidecomments");
+
     var controlDiv = document.createElement("div");
     controlDiv.classList.add("control-div")
     controlDiv.append(nmButton);
+    controlDiv.append(hideComButton);
 
     var body = document.getElementsByTagName("body")[0];
     body.prepend(controlDiv);
@@ -211,11 +233,21 @@ function CreateControlDiv() {
 function SetMode(functionCode, mode) {
     if(!functionCode) return;
 
+    // Toggle Night Mode
     if(functionCode === "togglebtnnightmode") {
         if(mode === true) {
             document.body.classList.add("nightmode");
         } else {
             document.body.classList.remove("nightmode");
+        }
+    }
+
+    // Toggle Hide Comments
+    if(functionCode === "togglebtnhidecomments") {
+        if(mode === true) {
+            document.body.classList.remove("hide-comments");
+        } else {
+            document.body.classList.add("hide-comments");
         }
     }
 }
